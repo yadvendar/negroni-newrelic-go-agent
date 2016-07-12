@@ -21,7 +21,9 @@ func New(config api.Config) (*Newrelic, error) {
 }
 
 func (n *Newrelic) ServeHTTP(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	(*n.Transaction) = (*n.Application).StartTransaction(r.URL.Path, rw, r)
+
+	txn := ((*n.Application).StartTransaction(r.URL.Path, rw, r)).(newrelic.Transaction)
+	n.Transaction = &txn
 	defer (*n.Transaction).End()
 
 	// Use if required
