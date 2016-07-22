@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/newrelic/go-agent"
-	"github.com/newrelic/go-agent/api"
 )
 
 type Newrelic struct {
@@ -12,10 +11,10 @@ type Newrelic struct {
 	Transaction *newrelic.Transaction
 }
 
-func NewConfig(applicationName string, licenseKey string) api.Config {
+func NewConfig(applicationName string, licenseKey string) newrelic.Config {
 	return newrelic.NewConfig(applicationName, licenseKey)
 }
-func New(config api.Config) (*Newrelic, error) {
+func New(config newrelic.Config) (*Newrelic, error) {
 	app, err := newrelic.NewApplication(config)
 	return &Newrelic{Application: &app}, err
 }
